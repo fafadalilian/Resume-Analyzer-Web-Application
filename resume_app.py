@@ -4,38 +4,26 @@ Created on Tue Jul 16 21:44:55 2024
 
 @author: Fatemeh Dalilian
 """
-#from dotenv import load_dotenv
-#import os
+
 import streamlit as st
-# from langchain.chains.question_answering import load_qa_chain
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
-#load_dotenv()
+
 
 google_api_key = st.secrets["GOOGLE_API_KEY"]
 
-#google_api_key = os.getenv("GOOGLE_API_KEY")
-
-# st.set_page_config(page_title="Detailed Resume Analysis", page_icon=":robot:")
-st.header("Detailed Resume Analysis:")
-
-# def get_api_key():
-#     input_text = st.text_input(label="Google API Key ",  placeholder="Ex: sk-2twmA8tfCb8un4...", key="google_api_key_input")
-#     return input_text
-
-# google_api_key = get_api_key()
 
 
 
 
-def get_resume():
-    resume_text = st.text_area(label="resume Input", label_visibility='collapsed', placeholder="Your resume...", key="resume_input")
-    return resume_text
+# def get_resume():
+#     resume_text = st.text_area(label="resume Input", label_visibility='collapsed', placeholder="Your resume...", key="resume_input")
+#     return resume_text
 
-def get_job():
-    job_text = st.text_area(label="job Input", label_visibility='collapsed', placeholder="Your job desciption...", key="job_input")
-    return job_text
+# def get_job():
+#     job_text = st.text_area(label="job Input", label_visibility='collapsed', placeholder="Your job desciption...", key="job_input")
+#     return job_text
 
 
 
@@ -43,12 +31,12 @@ llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro",
                              temperature=0.3)
 
 
-col1, col2 = st.columns(2)
-with col1:
-  resume_input = get_resume()
+# col1, col2 = st.columns(2)
+# with col1:
+#   resume_input = get_resume()
 
-with col2:
-  job_input = get_job()
+# with col2:
+#   job_input = get_job()
 
 
 
@@ -205,9 +193,14 @@ def display_results(results):
 # Main function to run the Streamlit app
 def main():
     st.title("Resume Analyzer Web Application")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+      resume_input = st.text_area("Resume", "Enter the resume content here...")
 
-    job_input = st.text_area("Job Description", "Enter the job description here...")
-    resume_input = st.text_area("Resume", "Enter the resume content here...")
+    with col2:
+      job_input = st.text_area("Job Description", "Enter the job description here...")
+
 
     if st.button("Analyze Resume"):
         with st.spinner("Analyzing..."):
