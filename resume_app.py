@@ -31,13 +31,6 @@ llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro",
                              temperature=0.3)
 
 
-# col1, col2 = st.columns(2)
-# with col1:
-#   resume_input = get_resume()
-
-# with col2:
-#   job_input = get_job()
-
 
 
 job_prompt = """
@@ -196,10 +189,10 @@ def main():
     
     col1, col2 = st.columns(2)
     with col1:
-      resume_input = st.text_area("Resume", "Enter the resume content here...")
+      resume_input = st.text_area("Resume", label_visibility='collapsed', "Enter the resume content here...")
 
     with col2:
-      job_input = st.text_area("Job Description", "Enter the job description here...")
+      job_input = st.text_area("Job Description", label_visibility='collapsed', "Enter the job description here...")
 
 
     if st.button("Analyze Resume"):
