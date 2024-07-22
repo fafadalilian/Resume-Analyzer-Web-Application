@@ -146,21 +146,92 @@ def match_analysis(job_text, resume_text):
 #     st.write("Please enter a shorter email. The maximum length is 700 words.")
 #     st.stop()
 
-def analyze():
-    # Show "OK Wait!" message
-    wait_placeholder = st.empty()
-    wait_placeholder.markdown("### OK Wait!")
-    
-    # Perform the analysis
-    res = match_analysis(job_input, resume_input)
-    
-    # Clear the "OK Wait!" message and show the result
-    wait_placeholder.empty()
-    result_placeholder.write(res)
+def parse_response(response):
+    sections = {
+        "matching_qualifications": [],
+        "non_matching_qualifications": [],
+        "qualifications_to_be_added": [],
+        "recommendations": []
+    }
 
-# Placeholder for the results at the bottom of the page
-result_placeholder = st.empty()
+    current_section = None
+    for line in response.split('\n'):
+        line = line.strip()
+        if line.startswith("###"):
+            if "Matching Qualifications" in line:
+                current_section = "matching_qualifications"
+            elif "Non-Matching Qualifications" in line:
+                current_section = "non_matching_qualifications"
+            elif "Qualifications to be added" in line:
+                current_section = "qualifications_to_be_added"
+            elif "Recommendations" in line:
+                current_section = "recommendations"
+        elif line.startswith("- ") and current_section:
+            item = line[2:]  # Remove the leading "- "
+            sections[current_section].append(item)
+    
+    # Number the items in each section
+    for section in sections:
+        sections[section] = [f"{i+1}. {item}" for i, item in enumerate(sections[section])]
+    
+    return sections
 
-#if job_input and resume_input:
-if st.button("*analyze*", type='secondary', help="Click to analyze your resume."):
-    analyze()
+
+
+# Function to display the analysis results
+def display_results(results):
+    col1, col2, col3, col4 = st.columns(4)
+
+    with col1:
+        st.markdown("### Matching Qualifications:")
+        for item in results["matching_qualifications"]:
+            st.write(f"- {item}")
+
+    with col2:
+        st.markdown("### Non-Matching Qualifications:")
+        for item in results["non_matching_qualifications"]:
+            st.write(f"- {item}")
+
+    with col3:
+        st.markdown("### Qualifications to be Added:")
+        for item in results["qualifications_to_be_added"]:
+            st.write(f"- {item}")
+
+    with col4:
+        st.markdown("### Recommendations:")
+        for item in results["recommendations"]:
+            st.write(f"- {item}")
+
+# Main function to run the Streamlit app
+def main():
+    st.title("Resume Analyzer Web Application")
+
+    job_input = st.text_area("Job Description", "Enter the job description here...")
+    resume_input = st.text_area("Resume", "Enter the resume content here...")
+
+    if st.button("Analyze Resume"):
+        with st.spinner("Analyzing..."):
+            results = match_analysis(job_input, resume_input)
+            display_results(results)
+
+if __name__ == "__main__":
+    main()
+
+# def analyze():
+#     # Show "OK Wait!" message
+#     wait_placeholder = st.empty()
+#     wait_placeholder.markdown("### OK Wait!")
+    
+#     # Perform the analysis
+#     res = match_analysis(job_input, resume_input)
+    
+#     # Clear the "OK Wait!" message and show the result
+#     wait_placeholder.empty()
+#     result_placeholder.write(res)
+
+# # Placeholder for the results at the bottom of the page
+# result_placeholder = st.empty()
+
+# #if job_input and resume_input:
+# if st.button("*analyze*", type='secondary', help="Click to analyze your resume."):
+#     analyze()
