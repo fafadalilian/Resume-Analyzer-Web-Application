@@ -161,6 +161,6 @@ def analyze():
 # Placeholder for the results at the bottom of the page
 result_placeholder = st.empty()
 
-if job_input and resume_input:
-    if st.button("*analyze*", type='secondary', help="Click to analyze your resume."):
-        analyze()
+#if job_input and resume_input:
+if st.button("*analyze*", type='secondary', help="Click to analyze your resume."):
+    analyze()
