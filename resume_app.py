@@ -4,18 +4,18 @@ Created on Tue Jul 16 21:44:55 2024
 
 @author: Fatemeh Dalilian
 """
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 import os
 import streamlit as st
 # from langchain.chains.question_answering import load_qa_chain
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
-load_dotenv()
+#load_dotenv()
 
 
 
-google_api_key = os.getenv("GOOGLE_API_KEY")
+#google_api_key = os.getenv("GOOGLE_API_KEY")
 
 # st.set_page_config(page_title="Detailed Resume Analysis", page_icon=":robot:")
 st.header("Detailed Resume Analysis:")
