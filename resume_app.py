@@ -189,10 +189,10 @@ def main():
     
     col1, col2 = st.columns(2)
     with col1:
-      resume_input = st.text_area("Resume", label_visibility='collapsed', "Enter the resume content here...", key="resume_input")
+      resume_input = st.text_area("Resume", label_visibility='collapsed', placeholder="Enter the resume content here...", key="resume_input")
 
     with col2:
-      job_input = st.text_area("Job Description", label_visibility='collapsed', "Enter the job description here...", key="job_input")
+      job_input = st.text_area("Job Description", label_visibility='collapsed', placeholder="Enter the job description here...", key="job_input")
 
 
     if st.button("Analyze Resume"):
