@@ -68,7 +68,7 @@ Given the list of qualifications and keywords extracted from the job description
 ### Qualifications you might wanna add:
 - List each qualification needed in the job description not mentioned in the resume. (where this keyword is extracted or implied from)
 
-### Qualifications you have on the resume that is not exactly required for the job:
+### Qualifications you have on your resume that are not exactly required for the job:
 - List each non-matching qualification (if it is beneficial to have on the resume)
 
 ### Recommendations:
