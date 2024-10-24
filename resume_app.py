@@ -23,56 +23,72 @@ llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro",
 
 
 job_prompt = """
-give me a list of all keywords from the following job description in order of importance (do not provide more information):
+ASK:
+Provide a list of keywords from the following job description, ranked by importance.
 
+CONTEXT:
 Job Description:
 {text}
 
+CONSTRAINTS:
+
+List only the keywords in order of importance.
+For years of industry experience, state the number if mentioned; otherwise, say "Not specified."
+OUTPUT FORMAT:
 
 Keywords in order of importance:
-- List each keyword
+List each keyword.
 Years of industry experience:
-- Mention the years of industry experience (if needed) otherwise say Not specified
+Mention the years of experience or say "Not specified."
 
 """
 
 resume_prompt = """
-List all the keywords implied from the following resume and format them in a structured manner :
 
+Here’s the refined version of your prompt:
+
+ASK:
+List all the keywords implied from the following resume and present them in a structured format.
+
+CONTEXT:
 Resume:
 {text}
 
-## Keywords:
+OUTPUT FORMAT:
 
-- List each keyword (where this keyword is extracted and implied from)
+Keywords:
+List each keyword, specifying the section of the resume from which the keyword is extracted or implied.
  """
 
 match_prompt = """
-Given the list of qualifications and keywords extracted from the job description, and the qualifications as well as implied qualification listed on the resume, provide the following (do not make up things or recommendations if the resume is good):
+ASK:
+Based on the provided list of qualifications and keywords extracted from the job description, and the qualifications listed or implied in the resume, provide the following:
 
-1. A list of qualifications from the resume that match the job description keywords and qualifications.
-2. A list of qualifications from the resume that do not match the job description keywords and qualifications.
-3. A list of qualifications needed in the job description keywords but do not match the resume qualifications.
+A list of qualifications from the resume that match the job description keywords and qualifications.
+A list of qualifications from the resume that do not match the job description keywords and qualifications.
+A list of qualifications required by the job description that are not present on the resume.
+CONSTRAINTS:
 
+Do not make up recommendations if the resume is complete.
+Do not suggest changes if the resume is a good fit.
+INPUT:
 
-## Job Description Keywords and Qualifications:
+Job Description Keywords and Qualifications:
 {keywords_and_qualifications}
 
-## Resume Qualifications:
+Resume Qualifications:
 {resume_qualifications}
 
-## Output:
-### Matching Qualifications:
-- List each matching qualification (where this is extracted or implied from)
+OUTPUT:
 
-### Qualifications you might wanna add:
-- List each qualification needed in the job description not mentioned in the resume. (where this keyword is extracted or implied from)
-
-### Qualifications you have on your resume that are not exactly required for the job:
-- List each non-matching qualification (if it is beneficial to have on the resume)
-
-### Recommendations:
-- List each recommendation
+Matching Qualifications:
+List each matching qualification (state where it is extracted or implied from).
+Qualifications to Consider Adding:
+List each qualification needed in the job description that is not present on the resume (state where the keyword is extracted or implied from).
+Qualifications on the Resume Not Required by the Job:
+List each non-matching qualification, mentioning if it's beneficial to have on the resume.
+Recommendations:
+Provide any recommendations only if necessary (optional).
 
 """
 
