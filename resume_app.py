@@ -23,18 +23,19 @@ llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro",
 
 
 job_prompt = """
-ASK:
+__ASK__
 Provide a list of keywords from the following job description, ranked by importance.
 
-CONTEXT:
+__CONTEXT__
 Job Description:
 {text}
 
-CONSTRAINTS:
+__CONSTRAINTS__
 
 List only the keywords in order of importance.
 For years of industry experience, state the number if mentioned; otherwise, say "Not specified."
-OUTPUT FORMAT:
+
+__OUTPUT FORMAT__
 
 Keywords in order of importance:
 List each keyword.
@@ -45,33 +46,32 @@ Mention the years of experience or say "Not specified."
 
 resume_prompt = """
 
-Here’s the refined version of your prompt:
-
-ASK:
+__ASK__
 List all the keywords implied from the following resume and present them in a structured format.
 
-CONTEXT:
+__CONTEXT__
 Resume:
 {text}
 
-OUTPUT FORMAT:
+__OUTPUT FORMAT__
 
 Keywords:
 List each keyword, specifying the section of the resume from which the keyword is extracted or implied.
  """
 
 match_prompt = """
-ASK:
+__ASK__
 Based on the provided list of qualifications and keywords extracted from the job description, and the qualifications listed or implied in the resume, provide the following:
 
 A list of qualifications from the resume that match the job description keywords and qualifications.
 A list of qualifications from the resume that do not match the job description keywords and qualifications.
 A list of qualifications required by the job description that are not present on the resume.
-CONSTRAINTS:
+
+__CONSTRAINTS__
 
 Do not make up recommendations if the resume is complete.
 Do not suggest changes if the resume is a good fit.
-INPUT:
+__INPUT__
 
 Job Description Keywords and Qualifications:
 {keywords_and_qualifications}
@@ -79,7 +79,7 @@ Job Description Keywords and Qualifications:
 Resume Qualifications:
 {resume_qualifications}
 
-OUTPUT:
+__OUTPUT__
 
 Matching Qualifications:
 List each matching qualification (state where it is extracted or implied from).
